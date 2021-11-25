@@ -3,8 +3,15 @@ import {AddItemForm} from "../../Components/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
 import {addTaskAC, TaskType} from "../Tasks/task-reducer";
-import {changeFilterValueAC, FilterValueType, TodolistType} from "./todolist-reducer";
+import {
+    changeFilterValueAC,
+    changeTodolistTitleAC,
+    deleteTodolistAC,
+    FilterValueType,
+    TodolistType
+} from "./todolist-reducer";
 import {Task} from "../Tasks/Task";
+import {EditableSpan} from "../../Components/EditableSpan";
 
 type PropsType = {
     todolist: TodolistType
@@ -15,6 +22,17 @@ export const Todolist: React.FC<PropsType> = ({todolist}) => {
 
     const addNewTask = (inputValue: string) => {
         dispatch(addTaskAC(todolist.id, inputValue))
+    }
+
+    const changeTodolistFilter = (newFilterValue: FilterValueType) => {
+        dispatch(changeFilterValueAC(todolist.id, newFilterValue))
+    }
+    const deleteTodolist = () => {
+        dispatch(deleteTodolistAC(todolist.id))
+    }
+
+    const changeTodolistTitle = (newTodolistTitle: string) => {
+      dispatch(changeTodolistTitleAC(todolist.id, newTodolistTitle))
     }
 
     let tasksAfterFilter;
@@ -30,13 +48,11 @@ export const Todolist: React.FC<PropsType> = ({todolist}) => {
     }
     const tasksForRender = tasksAfterFilter.map(el => <Task key={el.taskId} task={el}/>);
 
-    const changeTodolistFilter = (newFilterValue: FilterValueType) => {
-        dispatch(changeFilterValueAC(todolist.id, newFilterValue))
-    }
 
     return (
         <div>
-            <h3>{todolist.title}</h3>
+            <EditableSpan title={todolist.title} setNewItemHandler={changeTodolistTitle}/>
+            <button onClick={deleteTodolist}>X</button>
             <AddItemForm addItemHandler={addNewTask}/>
             {tasksForRender}
             <div>

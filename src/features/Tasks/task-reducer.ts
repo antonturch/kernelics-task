@@ -1,9 +1,17 @@
 import {v1} from "uuid";
-import {TODOLIST_ID1, TODOLIST_ID2} from "../Todolists/todolist-reducer";
+import {
+    ADD_TODOLIST,
+    addTodolistAC,
+    DELETE_TODOLIST,
+    deleteTodolistAC,
+    TODOLIST_ID1,
+    TODOLIST_ID2
+} from "../Todolists/todolist-reducer";
 
 const CHANGE_TASK_STATUS = "CHANGE-TASK-STATUS" as const
 const DELETE_TASK = "DELETE-TASK" as const
 const ADD_TASK = "ADD-TASK" as const
+const CHANGE_TASK_TITLE = "CHANGE-TASK-TITLE" as const
 
 
 export type TaskType = {
@@ -17,42 +25,38 @@ export type TasksType = {
     [key: string]: TaskType[]
 }
 
-type ChangeTaskStatusACType = {
-    type: "CHANGE-TASK-STATUS"
-    todolistId: string
-    taskId: string
-}
-type DeleteTaskACType = {
-    type: "DELETE-TASK"
-    todolistId: string
-    taskId: string
-}
+type ActionsType =
+    ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof deleteTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof changeTaskTitleAC>
+    | ReturnType<typeof deleteTodolistAC>
+    | ReturnType<typeof addTodolistAC>
 
-type AddTaskACType = {
-    type: "ADD-TASK"
-    todolistId: string
-    newTaskTitle: string
-}
-
-
-type ActionsType = ChangeTaskStatusACType | DeleteTaskACType | AddTaskACType
-
-export const changeTaskStatusAC = (todolistId: string, taskId: string): ChangeTaskStatusACType => ({
+export const changeTaskStatusAC = (todolistId: string, taskId: string) => ({
     type: CHANGE_TASK_STATUS,
     todolistId,
     taskId,
 })
 
-export const deleteTaskAC = (todolistId: string, taskId: string): DeleteTaskACType => ({
+export const deleteTaskAC = (todolistId: string, taskId: string) => ({
     type: DELETE_TASK,
     todolistId,
     taskId,
 })
-export const addTaskAC = (todolistId: string, newTaskTitle: string): AddTaskACType => ({
+export const addTaskAC = (todolistId: string, newTaskTitle: string) => ({
     type: ADD_TASK,
     todolistId,
     newTaskTitle,
 })
+
+export const changeTaskTitleAC = (todolistId: string, taskId: string, newTaskTitle: string) => ({
+    type: CHANGE_TASK_TITLE,
+    todolistId,
+    taskId,
+    newTaskTitle,
+})
+
 
 const initTasksState = {
     [TODOLIST_ID1]: [
@@ -94,6 +98,19 @@ export const taskReducer = (state: TasksType = initTasksState, action: ActionsTy
                 ...state,
                 [action.todolistId]: [newTask, ...state[action.todolistId]]
             }
+        case CHANGE_TASK_TITLE: {
+            return {
+                ...state,
+                [action.todolistId]: state[action.todolistId].map(
+                    el => el.taskId === action.taskId ? {...el, title: action.newTaskTitle} : el)
+            }
+        }
+        case DELETE_TODOLIST:
+            const copyState = {...state}
+            delete copyState[action.todolistId]
+            return copyState
+        case ADD_TODOLIST:
+            return {[action.todolistId]: [], ...state}
         default:
             return state
     }

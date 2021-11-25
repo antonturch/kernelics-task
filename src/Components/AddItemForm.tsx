@@ -11,7 +11,8 @@ export const AddItemForm: React.FC<PropsType> = ({addItemHandler}) => {
         setInputValue(event.currentTarget.value)
     }
 
-    const onClickButtonHanlder = () => {
+    const onClickButtonHandler = () => {
+        debugger
         addItemHandler(inputValue)
         setInputValue("")
     }
@@ -20,7 +21,7 @@ export const AddItemForm: React.FC<PropsType> = ({addItemHandler}) => {
         <div>
             <input type="text" placeholder={"New task/toodolist"} value={inputValue}
                    onChange={onChangeInputHandler}/>
-            <button onClick={onClickButtonHanlder}>Add</button>
+            <button onClick={onClickButtonHandler}>Add</button>
         </div>
     )
 }

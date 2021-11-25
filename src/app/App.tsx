@@ -1,14 +1,19 @@
 import React from "react";
 import "./App.css";
 import {TodolistsList} from "../features/Todolists/TodolistsList";
-import {AddItemForm} from "../Components/AddItemForm";
+import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
+import {AddTodolistPage} from "../Components/AddTodolistPage";
 
 function App() {
     return (
-        <div>
-            <AddItemForm addItemHandler={() => {}}/>
-            <TodolistsList/>
-        </div>
+        <BrowserRouter>
+            <NavLink to="/add">Add new todolist</NavLink>
+            <NavLink to="/todolists">Todolist page</NavLink>
+            <Routes>
+                <Route path="/add" element={<AddTodolistPage/>}/>
+                <Route path="/todolists" element={<TodolistsList/>}/>
+            </Routes>
+        </BrowserRouter>
     )
 }
 
