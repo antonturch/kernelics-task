@@ -2,6 +2,9 @@ import React from "react";
 import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, TaskType} from "./task-reducer";
 import {useDispatch} from "react-redux";
 import {EditableSpan} from "../../Components/EditableSpan";
+import {Checkbox} from "antd";
+import {IconButton} from "@mui/material";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 
 type PropsType = {
     task: TaskType
@@ -14,12 +17,15 @@ export const Task: React.FC<PropsType> = ({task}) => {
     }
     return (
         <li key={task.taskId}>
-            <input type="checkbox" checked={task.status}
-                   onClick={() => {
-                       dispatch(changeTaskStatusAC(task.todolistId, task.taskId))
-                   }}/>
+            <Checkbox checked={task.status}
+                      onClick={() => {
+                          dispatch(changeTaskStatusAC(task.todolistId, task.taskId))
+                      }}/>
             <EditableSpan title={task.title} setNewItemHandler={setNewTaskTitleHandler}/>
-            <button onClick={() => dispatch(deleteTaskAC(task.todolistId, task.taskId))}>x</button>
+            <IconButton aria-label="delete" size="small">
+                <DeleteOutlinedIcon onClick={() => dispatch(deleteTaskAC(task.todolistId, task.taskId))}
+                            fontSize="small"/>
+            </IconButton>
         </li>
     )
 }

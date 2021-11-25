@@ -12,6 +12,10 @@ import {
 } from "./todolist-reducer";
 import {Task} from "../Tasks/Task";
 import {EditableSpan} from "../../Components/EditableSpan";
+import {Button, IconButton, Paper, Tooltip} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/DeleteTwoTone";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
 
 type PropsType = {
     todolist: TodolistType
@@ -32,7 +36,7 @@ export const Todolist: React.FC<PropsType> = ({todolist}) => {
     }
 
     const changeTodolistTitle = (newTodolistTitle: string) => {
-      dispatch(changeTodolistTitleAC(todolist.id, newTodolistTitle))
+        dispatch(changeTodolistTitleAC(todolist.id, newTodolistTitle))
     }
 
     let tasksAfterFilter;
@@ -50,16 +54,30 @@ export const Todolist: React.FC<PropsType> = ({todolist}) => {
 
 
     return (
-        <div>
-            <EditableSpan title={todolist.title} setNewItemHandler={changeTodolistTitle}/>
-            <button onClick={deleteTodolist}>X</button>
+        <Paper style={{padding: "20px"}} elevation={2}>
+            <h3 style={{textAlign: "center"}}>
+                <EditableSpan title={todolist.title} setNewItemHandler={changeTodolistTitle}/>
+                <Tooltip title="Delete">
+                    <IconButton aria-label="delete" size="small">
+                        <DeleteIcon onClick={deleteTodolist}
+                                    fontSize="small"/>
+                    </IconButton>
+                </Tooltip>
+            </h3>
             <AddItemForm addItemHandler={addNewTask}/>
-            {tasksForRender}
-            <div>
-                <button onClick={() => changeTodolistFilter("all")}>All</button>
-                <button onClick={() => changeTodolistFilter("active")}>Active</button>
-                <button onClick={() => changeTodolistFilter("completed")}>Completed</button>
-            </div>
-        </div>
+            <ButtonGroup color="inherit" sx={{color: "#607d8b"}} aria-label="small button group">
+                <Button size="small" variant={todolist.filter === "all" ? "contained" : "outlined"}
+                        onClick={() => changeTodolistFilter("all")}>All</Button>
+                <Button size="small" variant={todolist.filter === "active" ? "contained" : "outlined"}
+                        onClick={() => changeTodolistFilter("active")}>Active</Button>
+                <Button size="small" variant={todolist.filter === "completed" ? "contained" : "outlined"}
+                        onClick={() => changeTodolistFilter("completed")}>Completed</Button>
+            </ButtonGroup>
+            <ul>
+                {tasksForRender}
+            </ul>
+        </Paper>
     )
 }
+
+
