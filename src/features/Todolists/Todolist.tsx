@@ -2,21 +2,21 @@ import React from "react";
 import style from "./Todolist.module.css";
 import {AddItemForm} from "../../Components/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {AppRootStateType} from "../../redux/store";
 import {
     addTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
     deleteTaskAC,
     TaskType
-} from "../Tasks/task-reducer";
+} from "../../redux/reducers/task-reducer";
 import {
     changeFilterValueAC,
     changeTodolistTitleAC,
     deleteTodolistAC,
     FilterValueType,
     TodolistType
-} from "./todolist-reducer";
+} from "../../redux/reducers/todolist-reducer";
 import {Task} from "../Tasks/Task";
 import {EditableSpan} from "../../Components/EditableSpan";
 import {Button, IconButton, Paper, Tooltip} from "@mui/material";

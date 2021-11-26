@@ -6,7 +6,7 @@ import {
     deleteTodolistAC,
     TODOLIST_ID1,
     TODOLIST_ID2
-} from "../Todolists/todolist-reducer";
+} from "./todolist-reducer";
 
 const CHANGE_TASK_STATUS = "CHANGE-TASK-STATUS" as const
 const DELETE_TASK = "DELETE-TASK" as const

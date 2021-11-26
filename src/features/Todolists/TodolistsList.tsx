@@ -1,8 +1,8 @@
 import React from "react";
 import {Todolist} from "./Todolist";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
-import {TodolistType} from "./todolist-reducer";
+import {AppRootStateType} from "../../redux/store";
+import {TodolistType} from "../../redux/reducers/todolist-reducer";
 import {Grid} from "@mui/material";
 
 

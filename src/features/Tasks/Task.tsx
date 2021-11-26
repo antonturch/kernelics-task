@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Task.module.css"
-import {TaskType} from "./task-reducer";
+import {TaskType} from "../../redux/reducers/task-reducer";
 import {EditableSpan} from "../../Components/EditableSpan";
 import {Checkbox} from "antd";
 import {IconButton} from "@mui/material";

@@ -29,9 +29,9 @@ export const deleteTodolistAC = (todolistId: string) => ({
     type: DELETE_TODOLIST,
     todolistId,
 })
-export const addTodolistAC = (todolistTitle: string) => ({
+export const addTodolistAC = (todolistId: string, todolistTitle: string) => ({
     type: ADD_TODOLIST,
-    todolistId: v1(),
+    todolistId,
     todolistTitle,
 })
 export const changeTodolistTitleAC = (todolistId: string, newTodolistTitle: string) => ({
@@ -45,10 +45,11 @@ const initTodolistsState: TodolistType[] = [
     {id: TODOLIST_ID2, title: "Second todolist", filter: "all",},
 ]
 
-export const todolistReducer = (state = initTodolistsState, action: ActionsType):TodolistType[] => {
+export const todolistReducer = (state = initTodolistsState, action: ActionsType): TodolistType[] => {
     switch (action.type) {
         case CHANGE_FILTER_VALUE:
-            const changedState =  state.map(tdl => tdl.id === action.todolistId ? {...tdl, filter: action.filterValue} : tdl)
+            const changedState = state.map(
+                tdl => tdl.id === action.todolistId ? {...tdl, filter: action.filterValue} : tdl)
             return changedState
         case DELETE_TODOLIST:
             return state.filter(tdl => tdl.id !== action.todolistId)
@@ -60,7 +61,8 @@ export const todolistReducer = (state = initTodolistsState, action: ActionsType)
             }
             return [newTodolist, ...state]
         case CHANGE_TODOLIST_TITLE:
-            return state.map(tdl => tdl.id === action.todolistId ? {...tdl, title: action.newTodolistTitle} : tdl)
+            return state.map(
+                tdl => tdl.id === action.todolistId ? {...tdl, title: action.newTodolistTitle} : tdl)
         default:
             return state
     }

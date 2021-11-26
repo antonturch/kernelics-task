@@ -1,6 +1,6 @@
 import {combineReducers, createStore} from "redux";
-import {todolistReducer} from "../features/Todolists/todolist-reducer";
-import {taskReducer} from "../features/Tasks/task-reducer";
+import {todolistReducer} from "./reducers/todolist-reducer";
+import {taskReducer} from "./reducers/task-reducer";
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
