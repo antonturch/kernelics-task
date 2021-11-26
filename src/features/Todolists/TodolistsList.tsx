@@ -5,15 +5,15 @@ import {AppRootStateType} from "../../app/store";
 import {TodolistType} from "./todolist-reducer";
 import {Grid} from "@mui/material";
 
-type PropsType = {}
 
-export const TodolistsList: React.FC<PropsType> = () => {
+export const TodolistsList = () => {
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
+
     return (
         <Grid container spacing={3} style={{justifyContent: "center"}}>
-            {todolists.map(el => {
-                return <Grid item maxWidth={"400px"} key={el.id} ><Todolist todolist={el}/></Grid>
-            })}
+            {todolists.map(tdl => <Grid item maxWidth={"400px"} key={tdl.id}><Todolist todolist={tdl}/>
+                </Grid>
+            )}
         </Grid>
     )
 }

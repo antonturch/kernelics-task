@@ -1,30 +1,33 @@
 import React from "react";
-import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, TaskType} from "./task-reducer";
-import {useDispatch} from "react-redux";
+import styles from "./Task.module.css"
+import {TaskType} from "./task-reducer";
 import {EditableSpan} from "../../Components/EditableSpan";
 import {Checkbox} from "antd";
 import {IconButton} from "@mui/material";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 
-type PropsType = {
+type TaskPropsType = {
     task: TaskType
+    setNewTaskTitle: (taskId: string, itemTitle: string) => void
+    changeTaskStatus: (taskId: string) => void
+    deleteTask: (taskId: string) => void
 }
-export const Task: React.FC<PropsType> = ({task}) => {
+export const Task: React.FC<TaskPropsType> = ({task, setNewTaskTitle, deleteTask, changeTaskStatus}) => {
 
-    const dispatch = useDispatch();
     const setNewTaskTitleHandler = (itemTitle: string) => {
-        dispatch(changeTaskTitleAC(task.todolistId, task.taskId, itemTitle))
+        setNewTaskTitle(task.taskId, itemTitle)
     }
+    const changeTaskStatusHandler = () => changeTaskStatus(task.taskId)
+    const deleteTaskHandler = () => deleteTask(task.taskId)
+
     return (
-        <li key={task.taskId}>
+        <li className={task.status ? styles.checked : ""} key={task.taskId}>
             <Checkbox checked={task.status}
-                      onClick={() => {
-                          dispatch(changeTaskStatusAC(task.todolistId, task.taskId))
-                      }}/>
+                      onClick={changeTaskStatusHandler}/>
             <EditableSpan title={task.title} setNewItemHandler={setNewTaskTitleHandler}/>
             <IconButton aria-label="delete" size="small">
-                <DeleteOutlinedIcon onClick={() => dispatch(deleteTaskAC(task.todolistId, task.taskId))}
-                            fontSize="small"/>
+                <DeleteOutlinedIcon onClick={deleteTaskHandler}
+                                    fontSize="small"/>
             </IconButton>
         </li>
     )

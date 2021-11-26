@@ -12,13 +12,12 @@ export type TodolistType = {
     title: string
     filter: FilterValueType
 }
-
 export type FilterValueType = "all" | "active" | "completed"
-
 type ActionsType = ReturnType<typeof deleteTodolistAC>
     | ReturnType<typeof changeFilterValueAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof changeTodolistTitleAC>
+
 
 export const changeFilterValueAC = (todolistId: string,
                                     filterValue: FilterValueType) => ({
@@ -26,19 +25,15 @@ export const changeFilterValueAC = (todolistId: string,
     todolistId,
     filterValue,
 })
-
 export const deleteTodolistAC = (todolistId: string) => ({
-        type: DELETE_TODOLIST,
-        todolistId,
-    }
-)
-
+    type: DELETE_TODOLIST,
+    todolistId,
+})
 export const addTodolistAC = (todolistTitle: string) => ({
     type: ADD_TODOLIST,
     todolistId: v1(),
     todolistTitle,
 })
-
 export const changeTodolistTitleAC = (todolistId: string, newTodolistTitle: string) => ({
     type: CHANGE_TODOLIST_TITLE,
     todolistId,
@@ -49,13 +44,14 @@ const initTodolistsState: TodolistType[] = [
     {id: TODOLIST_ID1, title: "First todolist", filter: "all",},
     {id: TODOLIST_ID2, title: "Second todolist", filter: "all",},
 ]
-export const todolistReducer = (state = initTodolistsState, action: ActionsType) => {
+
+export const todolistReducer = (state = initTodolistsState, action: ActionsType):TodolistType[] => {
     switch (action.type) {
         case CHANGE_FILTER_VALUE:
-            return state.map(
-                el => el.id === action.todolistId ? {...el, filter: action.filterValue} : el)
+            const changedState =  state.map(tdl => tdl.id === action.todolistId ? {...tdl, filter: action.filterValue} : tdl)
+            return changedState
         case DELETE_TODOLIST:
-            return state.filter(el => el.id !== action.todolistId)
+            return state.filter(tdl => tdl.id !== action.todolistId)
         case ADD_TODOLIST:
             const newTodolist: TodolistType = {
                 id: action.todolistId,
@@ -64,8 +60,7 @@ export const todolistReducer = (state = initTodolistsState, action: ActionsType)
             }
             return [newTodolist, ...state]
         case CHANGE_TODOLIST_TITLE:
-            return state.map(
-                el => el.id === action.todolistId ? {...el, title: action.newTodolistTitle} : el)
+            return state.map(tdl => tdl.id === action.todolistId ? {...tdl, title: action.newTodolistTitle} : tdl)
         default:
             return state
     }

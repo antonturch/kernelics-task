@@ -1,37 +1,58 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import AddTaskIcon from "@mui/icons-material/AddTask";
-import {TextField} from "@material-ui/core";
-import {IconButton} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
 
-type PropsType = {
+type AddItemFormPropsType = {
     addItemHandler: (inputValue: string) => void
+    inputLabel: string
 }
 
-export const AddItemForm: React.FC<PropsType> = ({addItemHandler}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItemHandler, inputLabel}) => {
+
     const [inputValue, setInputValue] = useState<string>("")
+    const [error, setError] = useState<boolean>(false)
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.currentTarget.value)
+        setError(false)
+        const newInputValue = event.currentTarget.value
+        setInputValue(newInputValue)
     }
 
     const onClickButtonHandler = () => {
-        debugger
-        addItemHandler(inputValue)
-        setInputValue("")
+        if (inputValue.trim() !== "") {
+            addItemHandler(inputValue)
+            setInputValue("")
+        } else {
+            setError(true)
+        }
+    }
+    const onPressEnterHandler = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.charCode === 13 && inputValue.trim() !== "") {
+            addItemHandler(inputValue)
+            setInputValue("")
+        } else
+            setError(true)
     }
 
     return (
         <div>
-            {/*<Input type="text" placeholder={"New task/toodolist"} value={inputValue}*/}
-            {/*       onChange={onChangeInputHandler}/>*/}
-            {/*<button onClick={onClickButtonHandler}>Add</button>*/}
-            <TextField size={"small"} id="outlined-basic" label="New task" variant="outlined"
-                       value={inputValue} onChange={onChangeInputHandler}
+            <TextField size={"small"}
+                       id="outlined-basic"
+                       label={inputLabel}
+                       variant="outlined"
+                       value={inputValue}
+                       onChange={onChangeInputHandler}
+                       error={error}
+                       helperText={error ? "title is required" : ""}
+                       className={error ? "error" : ""}
+                       onKeyPress={onPressEnterHandler}
+                       autoFocus
             />
             <IconButton aria-label="Add task" size="medium">
-            <AddTaskIcon fontSize="medium" onClick={onClickButtonHandler} color="success"/>
-                </IconButton>
-            {/*<Button size={"large"} variant={"contained"} onClick={onClickButtonHandler}>+1</Button>*/}
+                <AddTaskIcon fontSize="medium"
+                             onClick={onClickButtonHandler}
+                             color="success"/>
+            </IconButton>
         </div>
     )
 }
