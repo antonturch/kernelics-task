@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
+import styles from "./EditableSpan.module.css"
 
 type PropsType = {
     title: string
@@ -21,9 +22,9 @@ export const EditableSpan: React.FC<PropsType> = ({title, setNewItemHandler}) =>
 
     return (
         <>
-            {editMode ? <input type="text" value={itemTitle} onChange={onChangeInputHandler}
+            {editMode ? <input className={styles.input_todolist} type="text" value={itemTitle} onChange={onChangeInputHandler}
                                onBlur={onBlurInputHandler} autoFocus={true}/> :
-                <span onDoubleClick={() => setEditMode(true)}>{itemTitle}</span>}
+                <span className={styles.todolist_title} onDoubleClick={() => setEditMode(true)}>{itemTitle}</span>}
         </>
     )
 }

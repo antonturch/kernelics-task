@@ -1,3 +1,23 @@
+.todolist {
+    padding: 0 0 3px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+.todolist::after {
+    display: block;
+    position: absolute;
+    content: '';
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    border-radius: 0 0 50px 50px;
+    background: linear-gradient(to right, #5c3df5, #3d5cf5);
+}
+
 .buttonGroup {
     margin-top: 10px;
     margin-left: 3px;
@@ -5,3 +25,42 @@
 .tasksLi {
     list-style-type: none;
 }
+.task_controls {
+    padding: .5rem 1rem;
+}
+.task_controls button {
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: .8rem;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 100px;
+    margin-right: .5rem;
+    background-color: transparent;
+    transition: 150ms ease;
+    box-shadow: inset 0 0 0 1px #eeeef6;
+    color: #6f6f77;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+.task_controls button:hover {
+    box-shadow: none;
+    background-color: #eeeef6;
+}
+.task_controls button:hover i {
+    color: #e14;
+}
+.task_controls button:active,
+.task_controls button.btn_active {
+    background-color: #eeeef6;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.task_list {
+    padding: 0;
+    margin: 0;
+    background: #fff;
+}
+

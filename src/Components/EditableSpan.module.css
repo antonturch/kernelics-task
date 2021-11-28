@@ -1,0 +1,19 @@
+.input_todolist {
+    font-weight: 300;
+    display: inline;
+    background: #f8f8f8;
+    color: #888;
+    border: none;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    font-family: inherit;
+
+    outline: none;
+    transition: 300ms ease;
+    border-radius: 0.2rem;
+}
+
+.input_todolist:focus {
+    background: #d7edef;
+}

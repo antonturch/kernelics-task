@@ -1,20 +1,23 @@
 import {AddItemForm} from "./AddItemForm";
 import {useDispatch} from "react-redux";
 import {addTodolistAC} from "../redux/reducers/todolist-reducer";
-import React from "react";
-import {Grid} from "@material-ui/core";
+import React, {useCallback} from "react";
 import {v1} from "uuid";
+import style from "./AddTodolistPage.module.css"
 
-export const AddTodolistPage = () => {
+export const AddTodolistPage = React.memo(() => {
 
-    const dispatch = useDispatch()
-    const addTodolist = (todolistTitle: string) => {
-        dispatch(addTodolistAC(v1(), todolistTitle))
+        const dispatch = useDispatch()
+        const addTodolist = useCallback((todolistTitle: string) => {
+            dispatch(addTodolistAC(v1(), todolistTitle))
+        }, [dispatch])
+
+        return (
+            <div className={style.add_todolist_block}>
+                <div>
+                    <AddItemForm addItemHandler={addTodolist} type={"todolist"}/>
+                </div>
+            </div>
+        )
     }
-
-    return (
-        <Grid container style={{padding: "20px", justifyContent: "center"}}>
-            <AddItemForm addItemHandler={addTodolist} inputLabel={"New todolist"}/>
-        </Grid>
-    )
-}
+)

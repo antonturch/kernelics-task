@@ -1,19 +1,18 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import AddTaskIcon from "@mui/icons-material/AddTask";
-import {IconButton, TextField} from "@mui/material";
+import style from "./AddItemForm.module.css"
 
 type AddItemFormPropsType = {
     addItemHandler: (inputValue: string) => void
-    inputLabel: string
+    type: string
 }
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItemHandler, inputLabel}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItemHandler, type}) => {
 
     const [inputValue, setInputValue] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
+        setError("")
         const newInputValue = event.currentTarget.value
         setInputValue(newInputValue)
     }
@@ -23,7 +22,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItemHandler, inp
             addItemHandler(inputValue)
             setInputValue("")
         } else {
-            setError(true)
+            setError(`Please enter ${type} title`)
         }
     }
     const onPressEnterHandler = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -31,28 +30,26 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItemHandler, inp
             addItemHandler(inputValue)
             setInputValue("")
         } else
-            setError(true)
+            setError(`Please enter ${type} title`)
     }
 
     return (
-        <div>
-            <TextField size={"small"}
-                       id="outlined-basic"
-                       label={inputLabel}
-                       variant="outlined"
+        <div className={style.add_task_form}>
+            <div className={style.task_input}>
+                <input className={style.input}
+                       type={"text"}
+                       placeholder={`New ${type}`}
                        value={inputValue}
                        onChange={onChangeInputHandler}
-                       error={error}
-                       helperText={error ? "title is required" : ""}
-                       className={error ? "error" : ""}
                        onKeyPress={onPressEnterHandler}
-                       autoFocus
-            />
-            <IconButton aria-label="Add task" size="medium">
-                <AddTaskIcon fontSize="medium"
-                             onClick={onClickButtonHandler}
-                             color="success"/>
-            </IconButton>
+                       autoFocus/>
+                <div className={style.error_message}>{error}</div>
+            </div>
+            <button className={style.task_add_button} onClick={onClickButtonHandler}>
+                <svg viewBox="0 0 40 40">
+                    <path d="M10 20 L30 20 M20 10 L20 30"/>
+                </svg>
+            </button>
         </div>
     )
-}
+})
