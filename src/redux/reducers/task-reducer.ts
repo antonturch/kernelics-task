@@ -1,12 +1,5 @@
 import {v1} from "uuid";
-import {
-    ADD_TODOLIST,
-    addTodolistAC,
-    DELETE_TODOLIST,
-    deleteTodolistAC,
-    TODOLIST_ID1,
-    TODOLIST_ID2
-} from "./todolist-reducer";
+import {ADD_TODOLIST, addTodolistAC, DELETE_TODOLIST, deleteTodolistAC} from "./todolist-reducer";
 
 const CHANGE_TASK_STATUS = "CHANGE-TASK-STATUS" as const
 const DELETE_TASK = "DELETE-TASK" as const
@@ -54,17 +47,17 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, newTaskTit
 })
 
 const initTasksState: TasksType = {
-    [TODOLIST_ID1]: [
-        {todolistId: TODOLIST_ID1, taskId: v1(), title: "11", status: false},
-        {todolistId: TODOLIST_ID1, taskId: v1(), title: "12", status: false},
-        {todolistId: TODOLIST_ID1, taskId: v1(), title: "13", status: false},
-    ],
-    [TODOLIST_ID2]:
-        [
-            {todolistId: TODOLIST_ID2, taskId: v1(), title: "21", status: false},
-            {todolistId: TODOLIST_ID2, taskId: v1(), title: "22", status: false},
-            {todolistId: TODOLIST_ID2, taskId: v1(), title: "23", status: false},
-        ],
+    // [TODOLIST_ID1]: [
+    //     {todolistId: TODOLIST_ID1, taskId: v1(), title: "11", status: false},
+    //     {todolistId: TODOLIST_ID1, taskId: v1(), title: "12", status: false},
+    //     {todolistId: TODOLIST_ID1, taskId: v1(), title: "13", status: false},
+    // ],
+    // [TODOLIST_ID2]:
+    //     [
+    //         {todolistId: TODOLIST_ID2, taskId: v1(), title: "21", status: false},
+    //         {todolistId: TODOLIST_ID2, taskId: v1(), title: "22", status: false},
+    //         {todolistId: TODOLIST_ID2, taskId: v1(), title: "23", status: false},
+    //     ],
 }
 
 export const taskReducer = (state = initTasksState, action: ActionsType): TasksType => {

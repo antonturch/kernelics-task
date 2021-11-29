@@ -41,8 +41,8 @@ export const changeTodolistTitleAC = (todolistId: string, newTodolistTitle: stri
 })
 
 const initTodolistsState: TodolistType[] = [
-    {id: TODOLIST_ID1, title: "First todolist", filter: "all",},
-    {id: TODOLIST_ID2, title: "Second todolist", filter: "all",},
+    // {id: TODOLIST_ID1, title: "First todolist", filter: "all",},
+    // {id: TODOLIST_ID2, title: "Second todolist", filter: "all",},
 ]
 
 export const todolistReducer = (state = initTodolistsState, action: ActionsType): TodolistType[] => {
